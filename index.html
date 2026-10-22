@@ -535,6 +535,49 @@
   </div>
 
 <script>
+    // =========================================================
+// ប្រព័ន្ធការពារការលួចចម្លងកូដ (ANTI-INSPECT & ANTI-COPY)
+// =========================================================
+
+// ១. បិទការចុចម៉ៅស្ដាំ (Disable Right-Click)
+document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+});
+
+// ២. បិទគ្រាប់ចុច Shortcut ទាំងអស់លើក្តារចុច (Windows & Mac)
+document.addEventListener('keydown', function(e) {
+    // បិទ F12
+    if (e.key === 'F12' || e.keyCode === 123) {
+        e.preventDefault();
+        return false;
+    }
+    // បិទ Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C (Windows/Linux)
+    if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) {
+        e.preventDefault();
+        return false;
+    }
+    // បិទ Cmd+Option+I, Cmd+Option+J, Cmd+Option+C, Cmd+Option+U (Mac)
+    if (e.metaKey && e.altKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c' || e.key === 'U' || e.key === 'u')) {
+        e.preventDefault();
+        return false;
+    }
+    // បិទ Ctrl+U (View Source) និង Ctrl+S (Save Page) និង Ctrl+P (Print)
+    if ((e.ctrlKey || e.metaKey) && (e.key === 'U' || e.key === 'u' || e.key === 'S' || e.key === 's' || e.key === 'P' || e.key === 'p')) {
+        e.preventDefault();
+        return false;
+    }
+});
+
+// ៣. បង្កកកម្មវិធី និងលាក់អេក្រង់ ប្រសិនបើគេលួចបើក DevTools តាម Menu របស់ Browser
+setInterval(function() {
+    const startTime = performance.now();
+    debugger; // នឹងបង្កកដំណើរការភ្លាម បើផ្ទាំង Inspect Element កំពុងបើក
+    const endTime = performance.now();
+    
+    if (endTime - startTime > 100) {
+        document.body.innerHTML = '<div style="display:flex;justify-content:center;align-items:center;height:100vh;font-family:sans-serif;color:red;font-weight:bold;font-size:20px;text-align:center;padding:20px;">ហាមបើកប្រព័ន្ធត្រួតពិនិត្យកូដ (Inspect Element ត្រូវបានហាមឃាត់)! សូមបិទផ្ទាំង Inspect រួច Refresh ទំព័រឡើងវិញ។</div>';
+    }
+}, 1000);
 /* ========================================================= */
 /* ផ្នែកទី ១៖ SECURITY LOGIN & DYNAMIC JS LOADER               */
 /* ========================================================= */
